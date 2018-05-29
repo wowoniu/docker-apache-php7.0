@@ -73,8 +73,9 @@ RUN 	./configure --with-amqp --with-librabbitmq-dir=/usr/local/rabbitmq-c-0.8.0 
 	make && \
 	make install
 #开启amqp拓展/usr/lib/php/20170718/amqp.so
-RUN sed -i "s/;   extension=msql\.so/;   extension=msql\.so\n   extension=\/usr\/lib\/php\/20170718\/amqp.so/g"  /etc/php/7.2/apache2/php.ini
-RUN sed -i "s/;   extension=msql\.so/;   extension=msql\.so\n   extension=\/usr\/lib\/php\/20170718\/amqp.so/g"  /etc/php/7.2/cli/php.ini
+RUN sed -i "s/;   extension=\/path\/to\/extension\/mysqli\.so/;   extension=\/path\/to\/extension\/mysqli\.so\n   extension=\/usr\/lib\/php\/20170718\/amqp.so/g"  /etc/php/7.2/apache2/php.ini
+RUN sed -i "s/;   extension=\/path\/to\/extension\/mysqli\.so/;   extension=\/path\/to\/extension\/mysqli\.so\n   extension=\/usr\/lib\/php\/20170718\/amqp.so/g"  /etc/php/7.2/cli/php.ini
+
 
 
 #编译安装xdebug 注意：XDEBUG的配置 为了能在启动容器时进行动态配置 将配置处理移到了run.sh脚本中
