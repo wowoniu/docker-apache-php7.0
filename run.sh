@@ -29,7 +29,7 @@ xdebug.trace_output_dir = ${XDEBUG_PROFILE_DIR}
 xdebug.remote_port = ${XDEBUG_REMOTE_PORT}
 xdebug.ideky= ${XDEBUG_IDE_KEY}
 xdebug.remote_host=${XDEBUG_REMOTE_HOST}
-xdebug.remote_autostart = 0 " >> /etc/php/7.0/apache2/php.ini
+xdebug.remote_autostart = 0 " >> /etc/php/7.2/apache2/php.ini
 
 
 source /etc/apache2/envvars
