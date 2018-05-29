@@ -62,7 +62,7 @@ RUN	./configure --prefix=/usr/local/rabbitmq-c-0.8.0 && \
 	make install  
 WORKDIR /tmp/amqp-1.7.1
 RUN	phpize
-RUN 	./configure --with-amqp --with-librabbitmq-dir=/usr/local/rabbitmq-c-0.8.0 &&  --with-php-config=/usr/bin/php-config7.2  && \
+RUN 	./configure --with-amqp --with-librabbitmq-dir=/usr/local/rabbitmq-c-0.8.0 --with-php-config=/usr/bin/php-config7.2  && \
 	make && \
 	make install
 #开启amqp拓展/usr/lib/php/20160303/amqp.so
