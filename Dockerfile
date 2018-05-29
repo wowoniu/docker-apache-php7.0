@@ -34,7 +34,7 @@ RUN DEBIAN_FRONTEND=noninteractive && apt-get -yq install \
 	php7.2-bz2 \
 	&& \
 	rm -rf /var/lib/apt/lists/*
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf 
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 ENV ALLOW_OVERRIDE **True**
 
@@ -52,6 +52,13 @@ RUN mkdir -p /data && rm -fr /var/www/html && ln -s /data /var/www/html
 VOLUME  ["/etc/apache2"]
 
 #php config#####################################
+#compile re2c
+ADD soft/re2c-0.16.tar.gz /tmp/
+WORKDIR /tmp/re2c-0.16
+RUN	./configure && \
+	make && \
+	make install
+
 #compile amqp
 ADD soft/amqp-1.7.1.tgz /tmp/
 ADD soft/rabbitmq-c-0.8.0.tar.gz /tmp/
@@ -59,20 +66,21 @@ ADD soft/rabbitmq-c-0.8.0.tar.gz /tmp/
 WORKDIR /tmp/rabbitmq-c-0.8.0
 RUN	./configure --prefix=/usr/local/rabbitmq-c-0.8.0 && \
 	make && \
-	make install  
+	make install
 WORKDIR /tmp/amqp-1.7.1
 RUN	phpize
 RUN 	./configure --with-amqp --with-librabbitmq-dir=/usr/local/rabbitmq-c-0.8.0 --with-php-config=/usr/bin/php-config7.2  && \
 	make && \
 	make install
-#开启amqp拓展/usr/lib/php/20160303/amqp.so
-RUN sed -i "s/;   extension=msql\.so/;   extension=msql\.so\n   extension=\/usr\/lib\/php\/20160303\/amqp.so/g"  /etc/php/7.2/apache2/php.ini
-RUN sed -i "s/;   extension=msql\.so/;   extension=msql\.so\n   extension=\/usr\/lib\/php\/20160303\/amqp.so/g"  /etc/php/7.2/cli/php.ini
+#开启amqp拓展/usr/lib/php/20170718/amqp.so
+RUN sed -i "s/;   extension=msql\.so/;   extension=msql\.so\n   extension=\/usr\/lib\/php\/20170718\/amqp.so/g"  /etc/php/7.2/apache2/php.ini
+RUN sed -i "s/;   extension=msql\.so/;   extension=msql\.so\n   extension=\/usr\/lib\/php\/20170718\/amqp.so/g"  /etc/php/7.2/cli/php.ini
 
 
 #编译安装xdebug 注意：XDEBUG的配置 为了能在启动容器时进行动态配置 将配置处理移到了run.sh脚本中
-ADD soft/xdebug-2.5.5.tgz /tmp
-WORKDIR /tmp/xdebug-2.5.5
+#ADD soft/xdebug-2.5.5.tgz /tmp
+ADD soft/xdebug-2.7.0alpha1.tgz /tmp
+WORKDIR /tmp/xdebug-2.7.0alpha1
 RUN phpize && \
 	./configure --with-php-config=/usr/bin/php-config7.2 && \
 	make && make install
