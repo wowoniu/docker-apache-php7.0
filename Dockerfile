@@ -13,25 +13,25 @@ RUN DEBIAN_FRONTEND=noninteractive && apt-get -yq install \
         git \
         unzip \
 	apache2 \
-        libapache2-mod-php7.0 \
+        libapache2-mod-php7.2 \
         freetds-common \
 	freetds-dev \
 	freetds-bin \
-        php7.0 \
-	php7.0-fpm \
-	php7.0-mysql \
-	php7.0-sybase  \
-        php7.0-mysql \
-        php7.0-gd \
-        php7.0-curl \
+        php7.2 \
+	php7.2-fpm \
+	php7.2-mysql \
+	php7.2-sybase  \
+        php7.2-mysql \
+        php7.2-gd \
+        php7.2-curl \
         php-memcache \
-	php7.0-dev \
+	php7.2-dev \
         php-pear \
-	php7.0-xml \
-	php7.0-soap \
-	php7.0-mbstring \
-	php7.0-zip \
-	php7.0-bz2 \
+	php7.2-xml \
+	php7.2-soap \
+	php7.2-mbstring \
+	php7.2-zip \
+	php7.2-bz2 \
 	&& \
 	rm -rf /var/lib/apt/lists/*
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf 
@@ -65,9 +65,9 @@ RUN	phpize
 RUN 	./configure --with-amqp --with-librabbitmq-dir=/usr/local/rabbitmq-c-0.8.0 && \
 	make && \
 	make install
-#开启amqp拓展/usr/lib/php/7.0/20121212/amqp.so
-RUN sed -i "s/;   extension=msql\.so/;   extension=msql\.so\n   extension=\/usr\/lib\/php\/20151012\/amqp.so/g"  /etc/php/7.0/apache2/php.ini
-RUN sed -i "s/;   extension=msql\.so/;   extension=msql\.so\n   extension=\/usr\/lib\/php\/20151012\/amqp.so/g"  /etc/php/7.0/cli/php.ini
+#开启amqp拓展/usr/lib/php/20160303/amqp.so
+RUN sed -i "s/;   extension=msql\.so/;   extension=msql\.so\n   extension=\/usr\/lib\/php\/20160303\/amqp.so/g"  /etc/php/7.2/apache2/php.ini
+RUN sed -i "s/;   extension=msql\.so/;   extension=msql\.so\n   extension=\/usr\/lib\/php\/20160303\/amqp.so/g"  /etc/php/7.2/cli/php.ini
 
 
 #编译安装xdebug 注意：XDEBUG的配置 为了能在启动容器时进行动态配置 将配置处理移到了run.sh脚本中
@@ -84,10 +84,7 @@ RUN mv composer.phar /usr/local/bin/composer
 #设置国内composer镜像源
 RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
-#修正PHP命令 版本指向正确版本
-RUN rm /etc/alternatives/php && ln -s /usr/bin/php7.0  /etc/alternatives/php
-
-VOLUME  ["/etc/php/7.0"]
+VOLUME  ["/etc/php/7.2"]
 
 
 # Add image configuration and scripts
