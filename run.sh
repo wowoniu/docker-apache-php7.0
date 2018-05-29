@@ -18,7 +18,7 @@ ${XDEBUG_REMOTE_PORT:=9001}
 ${XDEBUG_IDE_KEY:=XDEBUG_SESSION}
 
 echo "[xdebug]
-zend_extension=/usr/lib/php/20160303/xdebug.so
+zend_extension=/usr/lib/php/20170718/xdebug.so
 xdebug.remote_enable = ${XDEBUG_REMOTE_ENABLE}
 xdebug.profiler_enable =${XDEBUG_PROFILE_ENABLE}
 xdebug.profiler_enable_trigger = 1
