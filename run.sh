@@ -1,5 +1,5 @@
 #!/bin/bash
-chown www-data:www-data /data -R
+#chown www-data:www-data /data -R
 
 
 #更改xdebug的配置
