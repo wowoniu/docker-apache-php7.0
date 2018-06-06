@@ -42,7 +42,7 @@ ENV ALLOW_OVERRIDE **True**
 #vhost
 ADD vhost.conf /etc/apache2/sites-available/vhost.conf
 ADD apache2.conf /etc/apache2/apache2.conf
-RUN a2enmod vhost_alias rewrite proxy proxy_fcgi
+RUN a2enmod vhost_alias rewrite proxy proxy_fcgi ssl
 RUN a2ensite vhost
 
 # Configure /data folder with sample app
@@ -101,5 +101,6 @@ ADD run.sh /run.sh
 RUN chmod 755 /*.sh
 
 EXPOSE 80
+EXPOSE 443
 WORKDIR /data
 CMD ["/run.sh"]
